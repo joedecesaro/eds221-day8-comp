@@ -125,3 +125,43 @@ ggplot(lizard_counts, aes( x = date, y = count)) +
                date_labels = "%Y")
 ```
 
+## Adding a color gradient
+
+```{r}
+ggplot(lizards, aes(x = total_length, y = weight)) +
+  geom_point(aes(color = weight)) + 
+  scale_color_gradientn(colors = c("orange", "red", "purple", "black"))
+# the above does not show anything at specific steps which is not ehlpful usually
+
+ggplot(lizards, aes(x = total_length, y = weight)) +
+  geom_point(aes(color = weight)) + 
+  scale_color_stepsn(colors = c("green", "blue", "purple"), 
+                     breaks = c(0, 20, 40, 50))
+```
+
+### Update color scheme using a palette in paletteer
+
+Make a horizontal boxplot with common_name on the y-axis, total_length on the x-axis, with color changing based on common_name
+```{r}
+lizards_fct <- lizards %>% 
+  mutate(common_name_fct = fct_reorder(common_name, .x = total_length, .fun = median))
+
+ggplot(lizards_fct, aes(x = total_length, y = common_name_fct)) +
+  geom_boxplot(aes(fill = common_name), show.legend = FALSE) +
+  scale_fill_paletteer_d(palette = "colorBlindness::Blue2DarkOrange18Steps")
+  
+
+```
+
+```{r}
+ggplot(lizards, aes(x = total_length, y = weight)) +
+  geom_point() +
+  theme(
+    plot.background = element_rect(fill = "cyan4"),
+    panel.grid = element_blank(), 
+    axis.text.x = element_text(color = "orange"),
+    axis.title = element_text(color = "yellow", size = 15)
+  )
+```
+
+
