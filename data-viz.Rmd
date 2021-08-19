@@ -290,4 +290,15 @@ ggplot(data = jornada_vegetation) +
 ```
 
 
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+```{r, fig.alt= "A histogram showing the body mass distributions of three individual penguin species."}
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram() +
+  facet_wrap(~species)
+```
 
